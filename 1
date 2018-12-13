@@ -1,0 +1,48 @@
+using System;
+using System.Diagnostics;
+
+namespace _1
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //be careful to make sure it doesn't go over the integer limit if you use bigger numbers - 
+            //if you want to do that change all ints to longs
+            sumMultiples3and5(999);
+            Stopwatch clock = Stopwatch.StartNew();
+            Console.WriteLine(sumMultipleXtillY(3, 999) + sumMultipleXtillY(5, 999) - sumMultipleXtillY(15, 999));
+            clock.Stop();
+            Console.WriteLine(clock.ElapsedMilliseconds);
+            Console.ReadLine();
+        }
+
+        //n(n+1)/2
+        //3..6...9...12...999 == 3(1+2+3...333)
+        //5...10...15...995 == 5(1+2+3...199)
+        //15....30....45 == 15(1 + 2...66)
+        //sum3 + sum5 - sum15
+
+        static int sumMultipleXtillY(int x, int y)
+        {
+            return x * (y / x * (y / x + 1) / 2);
+        }
+        static void sumMultiples3and5(int limit)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            int counter = 3;
+            int sum = 0;
+            while (counter < limit)
+            {
+                if (counter % 3 == 0 || counter % 5 == 0)
+                {
+                    sum += counter;
+                }
+                counter++;
+            }
+            watch.Stop();
+            Console.WriteLine(sum);
+            Console.WriteLine(watch.ElapsedMilliseconds);
+        }
+    }
+}
