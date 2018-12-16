@@ -1,0 +1,68 @@
+using System;
+using System.Diagnostics;
+
+namespace _2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            Console.WriteLine(FibonacciSumUntilLimit(4000000));
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+
+
+            Stopwatch watch2 = Stopwatch.StartNew();
+            Console.WriteLine(FibonacciSumUntilLimitOptimized(4000000));
+            watch2.Stop();
+            Console.WriteLine(watch2.ElapsedMilliseconds);
+
+            Console.ReadLine();
+        }
+
+        static int FibonacciSumUntilLimit(int limit)
+        {
+            //can start sum at 2 instead of 0 or change fib2 from 2 to 1 because it only checks the of fib1 and fib2
+            int sum = 0;
+            int fib1 = 1;
+            int fib2 = 1;
+
+            while (true)
+            {
+                int temp = fib1 + fib2;
+                fib2 = fib1;
+                fib1 = temp;
+
+                if (temp >= limit)
+                {
+                    return sum;
+                }
+                if (temp % 2 == 0)
+                {
+                    sum += temp;
+                }
+            }
+        }
+
+        static int FibonacciSumUntilLimitOptimized(int limit)
+        {
+            int sum = 2;
+            int fib3 = 2;
+            int fib6 = 0;
+
+            while (true)
+            {
+                int temp = 4 * fib3 + fib6;
+                fib6 = fib3;
+                fib3 = temp;
+
+                if (temp >= limit)
+                {
+                    return sum;
+                }
+                sum += temp;
+            }
+        }
+    }
+}
