@@ -1,0 +1,54 @@
+using System;
+using System.Diagnostics;
+
+namespace _3
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            Console.WriteLine(HighestPrime(600851475143));
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+            Console.ReadLine();
+        }
+
+        static long HighestPrime(long limit)
+        {
+            long currentPrime = 2;
+            long currentRemainder = limit;
+
+            //only need to check until the square root because there 
+            //can at most be one prime bigger than the square root.
+
+            //proof by contradiction
+            //p and q are prime factors of n --> p * q ≤ n
+            //p,q > √n --> p * q > √n * √n --> p * q > n
+            while (currentRemainder != 1 && currentPrime * currentPrime <= limit)
+            {
+                if (currentRemainder % currentPrime == 0)
+                {
+                    currentRemainder /= currentPrime;
+                }
+                else
+                {
+                    if (currentPrime == 2)
+                    {
+                        currentPrime = 3;
+                    }
+                    else
+                    {
+                        currentPrime+=2;
+                    }
+                }
+            }
+            if (currentRemainder != 1)
+            {
+                return currentRemainder;
+            }
+
+            return currentPrime;
+        } 
+    }
+}
