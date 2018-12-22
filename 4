@@ -1,0 +1,79 @@
+using System;
+using System.Diagnostics;
+
+namespace _4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch2 = Stopwatch.StartNew();
+            Console.WriteLine(CheckAllThreeDigitNumbersForPalindromesOptimized());
+            watch2.Stop();
+            Console.WriteLine(watch2.ElapsedMilliseconds + " ms");
+
+            Stopwatch watch = Stopwatch.StartNew();
+            Console.WriteLine(CheckAllThreeDigitNumbersForPalindromes());
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds + " ms");
+
+            Console.ReadLine();
+        }
+
+        static bool isPalindrome(int input)
+        {
+            string product = input.ToString();
+            char[] array = product.ToCharArray();
+            Array.Reverse(array);
+            return (product == new String(array));
+        }
+
+        static int CheckAllThreeDigitNumbersForPalindromesOptimized()
+        {
+            int highestPalindrome = 0;
+            int smallerNum = 0;
+            for (int i = 999; i >= 100; i--)
+            {
+                if (i*i < highestPalindrome)
+                {
+                    break;
+                }
+                for (int j = i; j >= 100; j--)
+                {
+                    if (j < smallerNum)
+                    {
+                        break;
+                    }
+                    if (isPalindrome(i * j))
+                    {
+                        if (highestPalindrome < i * j)
+                        {
+                            highestPalindrome = i * j;
+                            smallerNum = j;
+                        }
+                    }
+                }
+            }
+            return highestPalindrome;
+        }
+
+        static int CheckAllThreeDigitNumbersForPalindromes()
+        {
+            int highestPalindrome = 0;
+            for (int i = 100; i <= 999; i++)
+            {
+                for (int j = 100; j <= 999; j++)
+                {
+                    if (isPalindrome(i * j))
+                    {
+                        if (highestPalindrome < i * j)
+                        {
+                            highestPalindrome = i * j;
+                        }
+                    }
+                }
+            }
+            return highestPalindrome;
+        }
+    }
+}
