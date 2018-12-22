@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+namespace _5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            Console.WriteLine(BruteForceLCM());
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+
+            Stopwatch watch2 = Stopwatch.StartNew();
+            Console.WriteLine(OptimizedLCM(20));
+            watch2.Stop();
+            Console.WriteLine(watch2.ElapsedMilliseconds);
+
+            Console.ReadLine();
+        }
+
+        static long BruteForceLCM()
+        {
+            long currentNumber = 19 * 20;
+            long stepLength = 19 * 20;
+            while (true)
+            {
+                if (currentNumber % 2 == 0 && currentNumber % 3 == 0 && currentNumber % 4 == 0 && currentNumber % 5 == 0 && currentNumber % 6 == 0 
+                    && currentNumber % 7 == 0 && currentNumber % 8 == 0 && currentNumber % 9 == 0 && currentNumber % 10 == 0 && currentNumber % 11 == 0 
+                    && currentNumber % 12 == 0 && currentNumber % 13 == 0 && currentNumber % 14 == 0 && currentNumber % 15 == 0 && currentNumber % 16 == 0 
+                    && currentNumber % 17 == 0 && currentNumber % 18 == 0 && currentNumber % 19 == 0 && currentNumber % 20 == 0)
+                {
+                    return currentNumber;
+                }
+                currentNumber += stepLength;
+            }
+        }
+
+        static long HighestPrime(long limit)
+        {
+            long currentPrime = 2;
+            long currentRemainder = limit;
+
+            //only need to check until the square root because there 
+            //can at most be one prime bigger than the square root.
+
+            //proof by contradiction
+            //p and q are prime factors of n --> p * q ≤ n
+            //p,q > √n --> p * q > √n * √n --> p * q > n
+            while (currentRemainder != 1 && currentPrime * currentPrime <= limit)
+            {
+                if (currentRemainder % currentPrime == 0)
+                {
+                    currentRemainder /= currentPrime;
+                }
+                else
+                {
+                    if (currentPrime == 2)
+                    {
+                        currentPrime = 3;
+                    }
+                    else
+                    {
+                        currentPrime += 2;
+                    }
+                }
+            }
+            if (currentRemainder != 1)
+            {
+                return currentRemainder;
+            }
+
+            return currentPrime;
+        }
+
+        static long OptimizedLCM(int upperBound)
+        {
+            long currentProduct = 1;
+
+            for (int i = 2; i <= upperBound; i++)
+            {
+                if (HighestPrime(i) == i)
+                {
+                    int counter = 0;
+                    while (Math.Pow(i, counter) < upperBound)
+                    {
+                        counter++;
+                    }
+                    currentProduct *= (long)Math.Pow(i, counter - 1);
+                }
+            }
+            return currentProduct;
+        }
+    }
+}
