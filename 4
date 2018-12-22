@@ -20,7 +20,7 @@ namespace _4
             Console.ReadLine();
         }
 
-        static bool isPalindrome(int input)
+        static bool IsPalindrome(int input)
         {
             string product = input.ToString();
             char[] array = product.ToCharArray();
@@ -44,7 +44,7 @@ namespace _4
                     {
                         break;
                     }
-                    if (isPalindrome(i * j))
+                    if (IsPalindrome(i * j))
                     {
                         if (highestPalindrome < i * j)
                         {
@@ -64,7 +64,7 @@ namespace _4
             {
                 for (int j = 100; j <= 999; j++)
                 {
-                    if (isPalindrome(i * j))
+                    if (IsPalindrome(i * j))
                     {
                         if (highestPalindrome < i * j)
                         {
