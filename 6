@@ -1,0 +1,80 @@
+using System;
+using System.Diagnostics;
+
+namespace _6
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            watch.Start();
+            Console.WriteLine(FindDif(100));
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds + " ms");
+
+            Stopwatch watch2 = Stopwatch.StartNew();
+            watch2.Start();
+            Console.WriteLine(BruteForceOptimized(100));
+            watch2.Stop();
+            Console.WriteLine(watch2.ElapsedMilliseconds + " ms");
+
+            Stopwatch watch3 = Stopwatch.StartNew();
+            watch3.Start();
+            Console.WriteLine(ArithmeticOptimized(100));
+            watch3.Stop();
+            Console.WriteLine(watch3.ElapsedMilliseconds + " ms");
+            Console.ReadLine();
+        }
+        
+        private static int SquareOfSums(int endNum)
+        {
+            int sumOfNums = 0;
+            for (int i = 1; i <= endNum; i++)
+            {
+                sumOfNums += i;
+            }
+            return sumOfNums * sumOfNums;
+        }
+
+        private static int SumOfSquares(int endNum)
+        {
+            int sumOfSquares = 0;
+            for (int i = 1; i <= endNum; i++)
+            {
+                sumOfSquares += i * i;
+            }
+            return sumOfSquares;
+        }
+
+        private static int FindDif(int endNum)
+        {
+            return SquareOfSums(endNum) - SumOfSquares(endNum);
+        }
+
+        private static int BruteForceOptimized(int endNum)
+        {
+            int sumOfNums = 0;
+            int sumOfSquares = 0;
+
+            for (int i = 1; i <= endNum; i++)
+            {
+                sumOfNums += i;
+                sumOfSquares += i * i;
+            }
+
+            return sumOfNums * sumOfNums - sumOfSquares;
+        }
+
+        private static int ArithmeticOptimized(int endNum)
+        {
+            int sumOfNums = 0;
+            int sumOfSquares = 0;
+
+            sumOfNums = endNum * (endNum + 1) / 2;
+            sumOfSquares = endNum * (endNum + 1) * (endNum * 2 + 1) / 6;
+
+            return sumOfNums * sumOfNums - sumOfSquares;
+        }
+    }
+}
