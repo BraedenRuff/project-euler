@@ -1,0 +1,57 @@
+using System;
+using System.Diagnostics;
+
+namespace _8
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            Console.WriteLine(HighestProductFromAdjacentDigits(13));
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+            Console.ReadLine();
+        }
+
+        private static long HighestProductFromAdjacentDigits(int length)
+        {
+            string number = 
+                "73167176531330624919225119674426574742355349194934969835203127745063262395783180169" +
+                "84801869478851843858615607891129494954595017379583319528532088055111254069874715852" +
+                "38630507156932909632952274430435576689664895044524452316173185640309871112172238311" +
+                "36222989342338030813533627661428280644448664523874930358907296290491560440772390713" +
+                "81051585930796086670172427121883998797908792274921901699720888093776657273330010533" +
+                "67881220235421809751254540594752243525849077116705560136048395864467063244157221553" +
+                "97536978179778461740649551492908625693219784686224828397224137565705605749026140797" +
+                "29686524145351004748216637048440319989000889524345065854122758866688116427171479924" +
+                "44292823086346567481391912316282458617866458359124566529476545682848912883142607690" +
+                "04224219022671055626321111109370544217506941658960408071984038509624554443629812309" +
+                "87879927244284909188845801561660979191338754992005240636899125607176060588611646710" +
+                "940507754100225698315520005593572972571636269561882670428252483600823257530420752963450";
+            long highestProduct = 0;
+            int highestProductIndex = 0;
+            for (int i = 0; i < number.Length - length; i++)
+            {
+                string tempNum = number.Substring(i, length);
+                long tempProduct = 1;
+                for (int j = 0; j < tempNum.Length; j++)
+                {
+                    tempProduct *= tempNum[j] - 48; //ASCII of 1 is 49, 2 is 50, and so on. Alternatively use Convert.ToInt32(tempNum[j].ToString());
+                }
+                if (tempProduct > highestProduct)
+                {
+                    highestProduct = tempProduct;
+                    //just for fun let's write what digits they are
+                    highestProductIndex = i;
+                }
+            }
+            for (int i = 0; i < length; i++)
+            {
+                Console.Write(number[i + highestProductIndex] + " ");
+            }
+            Console.WriteLine();
+            return highestProduct;
+        }
+    }
+}
