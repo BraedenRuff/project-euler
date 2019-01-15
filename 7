@@ -9,19 +9,16 @@ namespace _7
         static void Main(string[] args)
         {
             Stopwatch watch = Stopwatch.StartNew();
-            watch.Start();
             Console.WriteLine(BruteForcePrimeGetter(10001));
             watch.Stop();
             Console.WriteLine(watch.ElapsedMilliseconds);
 
             Stopwatch watch2 = Stopwatch.StartNew();
-            watch2.Start();
             Console.WriteLine(FindCertainPrime(SeiveOfEratosthenes(105000), 10001));
             watch2.Stop();
             Console.WriteLine(watch2.ElapsedMilliseconds);
 
             Stopwatch watch3 = Stopwatch.StartNew();
-            watch3.Start();
             Console.WriteLine(FindCertainPrime(AdjustedSeiveOfEratosthenes(10001), 10001));
             watch3.Stop();
             Console.WriteLine(watch3.ElapsedMilliseconds);
