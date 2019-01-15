@@ -1,0 +1,123 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+namespace _7
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            watch.Start();
+            Console.WriteLine(BruteForcePrimeGetter(10001));
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+
+            Stopwatch watch2 = Stopwatch.StartNew();
+            watch2.Start();
+            Console.WriteLine(FindCertainPrime(SeiveOfEratosthenes(105000), 10001));
+            watch2.Stop();
+            Console.WriteLine(watch2.ElapsedMilliseconds);
+
+            Stopwatch watch3 = Stopwatch.StartNew();
+            watch3.Start();
+            Console.WriteLine(FindCertainPrime(AdjustedSeiveOfEratosthenes(10001), 10001));
+            watch3.Stop();
+            Console.WriteLine(watch3.ElapsedMilliseconds);
+            Console.ReadLine();
+        }
+
+        static int BruteForcePrimeGetter(int primeWanted)
+        {
+            List<int> primeList = new List<int>();
+            primeList.Add(2);
+            int counter = 3;
+            while (primeList.Count < primeWanted)
+            {
+                bool prime = true;
+                for (int i = 0; i < primeList.Count; i++)
+                {
+                    if (counter % primeList[i] == 0)
+                    {
+                        prime = false;
+                        break;
+                    }
+                }
+                if (prime)
+                {
+                    primeList.Add(counter);
+                }
+                counter += 2;
+            }
+            return primeList[primeWanted - 1];
+        }
+
+        static long FindCertainPrime(List<long> primes, int certainPrime)
+        {
+            return primes[certainPrime - 1];
+        }
+
+        static List<long> SeiveOfEratosthenes(long upperBound)
+        {
+            bool[] a = new bool[upperBound + 1];
+            List<long> primes = new List<long>();
+            for (long i = 2; i < upperBound + 1; i++)
+            {
+                a[i] = true;
+            }
+            for (long i = 2; i <= Math.Sqrt(upperBound) + 1; i++)
+            {
+                if (a[i])
+                {
+                    for (long j = i * i; j < upperBound + 1; j += i)
+                    {
+                        a[j] = false;
+                    }
+                }
+            }
+
+            for (long i = 2; i < upperBound + 1; i++)
+            {
+                if (a[i])
+                {
+                    primes.Add(i);
+                }
+            }
+
+            return primes;
+        }
+
+        static List<long> AdjustedSeiveOfEratosthenes(long length)
+        {
+            //added 20% error margin because it seems this approximation is always with 20% of the true value
+            long upperBound = (long)(length * Math.Log(length) * 1.2);
+            bool[] a = new bool[upperBound + 1];
+            List<long> primes = new List<long>();
+            for (long i = 2; i < upperBound + 1; i++)
+            {
+                a[i] = true;
+            }
+            for (long i = 2; i <= Math.Sqrt(upperBound) + 1; i++)
+            {
+                if (a[i])
+                {
+                    for (long j = i * i; j < upperBound + 1; j += i)
+                    {
+                        a[j] = false;
+                    }
+                }
+            }
+
+            for (long i = 2; i < upperBound + 1; i++)
+            {
+                if (a[i])
+                {
+                    primes.Add(i);
+                }
+            }
+
+            return primes;
+        }
+    }
+}
