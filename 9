@@ -1,0 +1,68 @@
+using System;
+using System.Diagnostics;
+
+namespace _9
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            Console.WriteLine(PythagoreanTripletBruteForce());
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+
+            Stopwatch watch2 = Stopwatch.StartNew();
+            Console.WriteLine(PythagoreanTripletUsingEuclid(1260 + 1680 + 2100));
+            watch2.Stop();
+            Console.WriteLine(watch2.ElapsedMilliseconds);
+            Console.ReadLine();
+        }
+
+        static int PythagoreanTripletBruteForce()
+        {
+            for (int i = 0; i < 333; i++)
+            {
+                for (int j = i; j < 500; j++)
+                {
+                    int k = 1000 - j - i;
+                    if (i * i + j * j == k * k)
+                    {
+                        //just to see what they are
+                        Console.WriteLine(i + " " + j + " " + k);
+                        return i * j * k;
+                    }
+                }
+            }
+            //returns 0 if there are no Pythagorean triplets that satisfy the conditions
+            return 0;
+        }
+
+        static int PythagoreanTripletUsingEuclid(double sumOfABC)
+        {
+            int a = 0, b = 0, c = 0;
+            int mUpperBound = (int)Math.Sqrt(sumOfABC / 2);
+            for (int m = 2; m <= mUpperBound; m++)
+            {
+                if ((sumOfABC / 2) % m == 0)
+                {
+                    for (int j = mUpperBound; j <= 2 * mUpperBound; j++)
+                    {
+                        if (((sumOfABC / (2 * m))) / j == 1 && j - m < m)
+                        {
+                            
+                            int n = j - m;
+                            a = m * m - n * n;
+                            b = 2 * m * n;
+                            c = m * m + n * n;
+                            Console.WriteLine(a + " " + b + " " + c);
+                            return a * b * c;
+                        }
+                    }
+                }
+            }
+            //returns 0 if there are no Pythagorean triplets that satisfy the conditions
+            return 0;
+        }
+    }
+}
