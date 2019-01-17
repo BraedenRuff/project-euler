@@ -1,0 +1,97 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+
+namespace _10
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+            Console.WriteLine(SumOfPrimes(SeiveOfEratosthenes(2000000)));
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+
+            Stopwatch watch2 = Stopwatch.StartNew();
+            Console.WriteLine(SumOfPrimes(SeiveOfEratosthenesOptimized(2000000)));
+            watch2.Stop();
+            Console.WriteLine(watch2.ElapsedMilliseconds);
+            
+            Console.ReadLine();
+        }
+
+        static long SumOfPrimes(List<long> primes)
+        {
+            long sum = 0;
+            foreach (long prime in primes)
+            {
+                sum += prime;
+            }
+            return sum;
+        }
+
+        static List<long> SeiveOfEratosthenes(long upperBound)
+        {
+            //bound is inclusive
+            bool[] a = new bool[upperBound + 1];
+            List<long> primes = new List<long>();
+            for (long i = 2; i < upperBound + 1; i++)
+            {
+                a[i] = true;
+            }
+            for (long i = 2; i <= Math.Sqrt(upperBound) + 1; i++)
+            {
+                if (a[i])
+                {
+                    for (long j = i * i; j < upperBound + 1; j += i)
+                    {
+                        a[j] = false;
+                    }
+                }
+            }
+
+            for (long i = 2; i < upperBound + 1; i++)
+            {
+                if (a[i])
+                {
+                    primes.Add(i);
+                }
+            }
+
+            return primes;
+        }
+
+        static List<long> SeiveOfEratosthenesOptimized(long upperBound)
+        {
+            //bound is inclusive
+            long newUpperBound = (upperBound + 1) / 2;
+            bool[] a = new bool[newUpperBound];
+            List<long> primes = new List<long>();
+            for (long i = 1; i < newUpperBound; i++)
+            {
+                a[i] = true;
+            }
+            for (long i = 1; i <= Math.Sqrt(upperBound + 1)/2; i++)
+            {
+                if (a[i])
+                {
+                    for (long j = 2 * i * i + 2 * i; j < newUpperBound; j += 2 * i + 1)
+                    {
+                        a[j] = false;
+                    }
+                }
+            }
+            primes.Add(2);
+            for (long i = 1; i < newUpperBound; i++)
+            {
+                if (a[i])
+                {
+                    primes.Add(2 * i + 1);
+                }
+            }
+
+            return primes;
+        }
+    }
+}
