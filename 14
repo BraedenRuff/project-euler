@@ -1,0 +1,49 @@
+using System;
+using System.Diagnostics;
+
+namespace _14
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Stopwatch watch = new Stopwatch();
+            watch.Start();
+            Console.WriteLine(LongestCollatzSequence(1000000));
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+            Console.ReadLine();
+        }
+
+        static long LongestCollatzSequence(long endPoint)
+        {
+            long highestItterationAmmount = 0;
+            long longestNumber = 0;
+            //longest chain can't be less than endpoint/2 because if it starts at endpoint/2 then that chain is 1 number bigger
+            for (long i = endPoint/2 - 1; i < endPoint;  i++)
+            {
+                long itterationAmount = 0;
+                long currentNumber = i;
+                while (currentNumber != 1)
+                {
+                    if (currentNumber % 2 == 0)
+                    {
+                        currentNumber /= 2;
+                    }
+                    else
+                    {
+                        currentNumber = currentNumber * 3 + 1;
+                    }
+                    itterationAmount++;
+                }
+                if (itterationAmount > highestItterationAmmount)
+                {
+                    highestItterationAmmount = itterationAmount;
+                    longestNumber = i;
+                }
+            }
+            Console.WriteLine(highestItterationAmmount);
+            return longestNumber;
+        }
+    }
+}
