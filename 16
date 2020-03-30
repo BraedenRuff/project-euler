@@ -1,0 +1,17 @@
+static void Main(string[] args)
+        {
+            Console.WriteLine(DigitCalc());
+            Console.ReadLine();
+        }
+
+        static BigInteger DigitCalc()
+        {
+            BigInteger num = BigInteger.Pow(2, 1000);
+            BigInteger rollingSum = 0;
+            while (num != 0)
+            {
+                rollingSum += num % 10;
+                num /= 10;
+            }
+            return rollingSum;
+        }
