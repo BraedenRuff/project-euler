@@ -1,0 +1,91 @@
+using System;
+
+namespace _17
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine(NumberToLetterConverter());
+            Console.ReadLine();
+        }
+
+        static int NumberToLetterConverter()
+        {
+            int rollingSum = 0;
+            for (int i = 1; i <= 1000; i++)
+            {
+                
+                switch(i % 10)
+                {
+                    case 1: case 2: case 6:  
+                        rollingSum += 3;
+                        break;
+                    case 3: case 7: case 8:
+                        rollingSum += 5;
+                        break;
+                    case 4: case 5: case 9:
+                        rollingSum += 4;
+                        break;
+                }
+                
+                switch(i % 100)
+                {
+                    case 10: case 11: case 12: case 13: case 15: case 18:
+                        rollingSum += 3;
+                        break;
+                    case 14: case 16: case 17: case 19:
+                        rollingSum += 4;
+                        break;
+                }
+                if ((i % 100 >= 20 && i % 100 < 40) || i % 100 >= 80)
+                {
+                    rollingSum += 6;
+                }
+                if (i % 100 >= 40 && i % 100 < 70)
+                {
+                    rollingSum += 5;
+                }
+                if (i % 100 >= 70 && i % 100 < 80)
+                {
+                    rollingSum += 7;
+                }
+                
+                if ((i % 1000 >= 100 && i % 1000 < 300) || (i % 1000 >= 600 && i % 1000 < 700))
+                {
+                    rollingSum += 13;
+                    if (i % 100 == 0)
+                    {
+                        rollingSum -= 3;
+                    }
+                }
+                if ((i % 1000 >= 300 && i % 1000 < 400) || (i % 1000 >= 700 && i % 1000 < 900))
+                {
+                    rollingSum += 15;
+                    if (i % 100 == 0)
+                    {
+                        rollingSum -= 3;
+                    }
+                }
+                if ((i % 1000 >= 400 && i % 1000 < 600) || (i % 1000 >= 900))
+                {
+                    rollingSum += 14;
+                    if (i % 100 == 0)
+                    {
+                        rollingSum -= 3;
+                    }
+                }
+                if (i == 1000)
+                {
+                    rollingSum += 11;
+                }
+                Console.WriteLine("i: " + i);
+                Console.WriteLine("rolling sum: " + rollingSum);
+                
+                Console.WriteLine();
+            }
+
+            return rollingSum;
+        }
+    }
+}
