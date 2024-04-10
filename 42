@@ -1,0 +1,53 @@
+try
+{
+    //Pass the file path and file name to the StreamReader constructor
+    //change this to where you downloaded it
+    StreamReader sr = new StreamReader("C://Users//braed//source//repos//ProjectEuler//42//0042_words.txt");
+    //Read the first line of text
+    String line = sr.ReadLine();
+
+    //file is one continuous comma separated list with each word enclosed in quotations
+    string[] words = line.Split("\",\"");
+
+    //get rid of first and last quotation
+    words[0] = words[0].Substring(1);
+    words[words.Length - 1] = words[words.Length - 1].Substring(0, words[words.Length - 1].Length - 1);
+
+    int numTriangles = 0;
+    //Continue to read until you reach end of file
+    while (line != null)
+    {
+        for (int i = 0; i < words.Length; i++)
+        {
+            int wordValue = convertToNumber(words[i].ToUpper()); // convert to upper in case
+            Boolean isTriangle = checkIfTriangleNum(wordValue);
+            if (isTriangle) { numTriangles++; }
+        }
+        //Read the next line
+        line = sr.ReadLine();
+    }
+    Console.WriteLine(numTriangles);
+    //close the file
+    sr.Close();
+    Console.ReadLine();
+}
+catch (Exception e)
+{
+    Console.WriteLine("Exception: " + e.Message);
+}
+
+int convertToNumber(string word)
+{
+    int sum = 0;
+    for (int i = 0; i < word.Length; ++i)
+    {
+        sum += word[i] - 64; // A is 65
+    }
+    return sum;
+}
+Boolean checkIfTriangleNum(int num)
+{
+    //formula is t_n = n/2(n+1), rearrange to 2t_n = n * (n+1)
+    int temp = (int)(Math.Floor(Math.Sqrt(2 * num))); //grab n
+    return 2 * num == temp * (temp + 1);
+}
